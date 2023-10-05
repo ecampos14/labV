@@ -18,28 +18,23 @@ import br.gov.sp.fatec.projetolab5.service.AutorizacaoService;
 @CrossOrigin
 @RequestMapping(value = "/autorizacao")
 public class AutorizacaoController {
+    
+    @Autowired
+    private AutorizacaoService service;
 
-	@Autowired
-	private AutorizacaoService service;
+    @GetMapping
+    public List<Autorizacao> buscarTodas() {
+        return service.buscarTodas();
+    }
 
-	@Autowired
-	public AutorizacaoController(AutorizacaoService service) {
-		this.service = service;
-	}
+    @GetMapping(value = "/{nome}")
+    public Autorizacao buscarPeloNome(@PathVariable("nome") String nome) {
+        return service.buscarPeloNome(nome);
+    }
 
-	@GetMapping
-	public List<Autorizacao> buscarTodas() {
-		return service.buscarTodas();
-	}
-
-	@GetMapping(value = "/{nome}")
-	public Autorizacao buscarPeloNome(@PathVariable("nome") String nome) {
-		return service.buscarPeloNome(nome);
-	}
-
-	@PostMapping
-	public Autorizacao novaAutorizaco(@RequestBody String nome) {
-		return service.novaAutorizacao(nome);
-	}
+    @PostMapping
+    public Autorizacao novaAutorizaco(@RequestBody String nome) {
+        return service.novaAutorizacao(nome);
+    }
 
 }
