@@ -38,64 +38,64 @@ public class AnotacaoServiceTest {
 
 	@Test
 	public void testNovaAnotacao() {
-		 String texto = "ManuTeste";
-		    String usuario1 = "ManuTeste";
-		    Usuario usuario = new Usuario();
-		    usuario.setId(1L);
-		    usuario.setNome(usuario1);
+		String texto = "ManuTeste";
+		String usuario1 = "ManuTeste";
+		Usuario usuario = new Usuario();
+		usuario.setId(1L);
+		usuario.setNome(usuario1);
 
-		    Anotacao anotacao1 = new Anotacao();
-		    anotacao1.setId(1L);
-		    anotacao1.setTexto(texto);
-		    anotacao1.setDataHora(LocalDateTime.now());
-		    anotacao1.setUsuario(usuario);
+		Anotacao anotacao1 = new Anotacao();
+		anotacao1.setId(1L);
+		anotacao1.setTexto(texto);
+		anotacao1.setDataHora(LocalDateTime.now());
+		anotacao1.setUsuario(usuario);
 
-		    when(usuarioRepo.findByNome(usuario1)).thenReturn(Optional.of(usuario));
-		    when(anotacaoRepo.save(any(Anotacao.class))).thenReturn(anotacao1);
+		when(usuarioRepo.findByNome(usuario1)).thenReturn(Optional.of(usuario));
+		when(anotacaoRepo.save(any(Anotacao.class))).thenReturn(anotacao1);
 
-		    Anotacao result = service.novaAnotacao(texto, usuario1);
+		Anotacao result = service.novaAnotacao(texto, usuario1);
 
-		    assertEquals(anotacao1, result);
+		assertEquals(anotacao1, result);
 	}
-	
+
 	@Test
-    public void testNovaAnotacaoComTextoNulo() {
-        String usuario = "ManuTeste";
+	public void testNovaAnotacaoComTextoNulo() {
+		String usuario = "ManuTeste";
 
-        assertThrows(ResponseStatusException.class, () -> {
-            service.novaAnotacao(null, usuario);
-        });
-    }
+		assertThrows(ResponseStatusException.class, () -> {
+			service.novaAnotacao(null, usuario);
+		});
+	}
 
-    @Test
-    public void testNovaAnotacaoComUsuarioNulo() {
-        String texto = "ManuTeste";
+	@Test
+	public void testNovaAnotacaoComUsuarioNulo() {
+		String texto = "ManuTeste";
 
-        assertThrows(ResponseStatusException.class, () -> {
-            service.novaAnotacao(texto, null);
-        });
-    }
+		assertThrows(ResponseStatusException.class, () -> {
+			service.novaAnotacao(texto, null);
+		});
+	}
 
-    @Test
-    public void testNovaAnotacaoComTextoCurto() {
-        String texto = "ManuTeste"; 
-        String usuario = "ManuTeste";
+	@Test
+	public void testNovaAnotacaoComTextoCurto() {
+		String texto = "ManuTeste";
+		String usuario = "ManuTeste";
 
-        assertThrows(ResponseStatusException.class, () -> {
-            service.novaAnotacao(texto, usuario);
-        });
-    }
+		assertThrows(ResponseStatusException.class, () -> {
+			service.novaAnotacao(texto, usuario);
+		});
+	}
 
-    @Test
-    public void testNovaAnotacaoComUsuarioNaoEncontrado() {
-        String texto = "ManuTeste";
-        String usuario = "ManuTeste";
+	@Test
+	public void testNovaAnotacaoComUsuarioNaoEncontrado() {
+		String texto = "ManuTeste";
+		String usuario = "ManuTeste";
 
-        when(usuarioRepo.findByNome(usuario)).thenReturn(Optional.empty());
+		when(usuarioRepo.findByNome(usuario)).thenReturn(Optional.empty());
 
-        assertThrows(ResponseStatusException.class, () -> {
-            service.novaAnotacao(texto, usuario);
-        });
-    }
+		assertThrows(ResponseStatusException.class, () -> {
+			service.novaAnotacao(texto, usuario);
+		});
+	}
 
 }
